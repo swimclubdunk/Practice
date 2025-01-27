@@ -59,7 +59,7 @@
         {
             int[] array = GetArray();
             int sumTarget = GetSumTarget(array);
-            int[] result = TwoSum(array, GetSumTarget(array));
+            int[] result = TwoSum(array, sumTarget);
 
             if (result != null && result.Length == 2 && (result[0] + result[1] == sumTarget))
                 successCount += 1;
