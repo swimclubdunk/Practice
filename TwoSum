@@ -1,0 +1,71 @@
+    int[] TwoSum(int[] array, int sumTarget)
+    {
+        Dictionary<int, int> numbers = new();
+
+        for (int i = 0; i < array.Length; i++)
+        {
+            int complement = sumTarget - array[i];
+
+            if (numbers.ContainsKey(complement))
+            {
+                return new int[] { complement, array[i] };
+            }
+            else if (!numbers.ContainsKey(array[i]))
+            {
+                numbers[array[i]] = i;
+            }
+        }
+
+        return new int[] { 0 };
+    }
+
+    int GetSumTarget(int[] array)
+    {
+        int firstIndex;
+        int secondIndex;
+
+        firstIndex = Random.Range(0, array.Length);
+        secondIndex = Random.Range(0, array.Length);
+
+        //Ensure distinct values
+        if (secondIndex == firstIndex)
+            secondIndex = (secondIndex + 1) % array.Length;
+
+        return array[firstIndex] + array[secondIndex];
+    }
+
+    int[] GetArray()
+    {
+        //Ensure array size is between 6 and 8 elements
+        int size = Random.Range(6, 9);
+        List<int> tempList = new();
+
+        while (tempList.Count < size)
+        {
+            int newNumber = Random.Range(0, 10);
+            if (!tempList.Contains(newNumber))
+                tempList.Add(newNumber);
+        }
+
+        return tempList.ToArray();
+    }
+
+    void RunTest()
+    {
+        int successCount = 0;
+        int iterationCount = 99999;
+
+        for(int i = 0; i<iterationCount;i++)
+        {
+            int[] array = GetArray();
+            int sumTarget = GetSumTarget(array);
+            int[] result = TwoSum(array, GetSumTarget(array));
+
+            if (result != null && result.Length == 2 && (result[0] + result[1] == sumTarget))
+                successCount += 1;
+        }
+
+        float successRate = successCount / iterationCount;
+        Debug.Log("Test concluded with " + (successRate*100).ToString("F2") + $"% success rate after {iterationCount} iterations");
+    }
+
